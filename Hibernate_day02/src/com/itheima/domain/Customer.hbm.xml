@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping package="com.itheima.domain" >
+ 	<class name="Customer" table="t_customer"  >
+		<id name="id" column="id"    >
+			<generator class="native"></generator>
+		</id> 	
+		<property name="name" column="name" type="string" ></property>
+ 		
+ 		<!-- 表达一对多关系中的集合
+ 			name:集合的属性名称
+ 			inverse: 是否将关系的维护反转给对方. 默认值: false
+ 				   true: 在Customer 中 放弃维护外键关系
+ 				   
+ 			cascade :级联操作
+ 				save-update：级联保存,级联修改. 保存A时,同时保存B. 
+				delete：删除A，同时删除B，AB都不存在
+				delete-orphan：孤儿删除，解除关系，同时将B删除，A存在的。
+				如果需要配置多项，使用逗号分隔。<set cascade="save-update,delete">
+				
+				all : save-update 和 delete 整合
+				all-delete-orphan : 三个整合
+ 				
+ 		 -->
+ 		<set name="orders" inverse="false" cascade="all-delete-orphan"  >
+ 			<!--
+ 				key 用来描述外键
+ 				column : 外键的值
+ 			  -->
+ 			<key column="cid" ></key>
+ 			<!-- one-to-many 表达, Customer 与orders 的关系是一对多
+ 				class: 表达关联的另一方的完整类名
+ 			 -->
+ 			<one-to-many class="Order" />
+ 		</set>
+ 	</class>
+ </hibernate-mapping>

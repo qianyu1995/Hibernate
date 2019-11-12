@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping package="com.itheima.domain" >
+ 	<class name="Address" table="t_Address"   >
+		<id name="id" column="id"    >
+		<!-- foreign: 该主键既是主键又是外键 -->
+			<generator class="foreign">
+			<!-- 作为外键时引用哪个属性 -->
+				<param name="property">company</param>
+			</generator>
+		</id> 
+			
+		<property name="name" column="name" type="string" ></property>
+		<!-- 配置一对一关系 -->
+		<one-to-one name="company" class="Company" constrained="true"  ></one-to-one>
+ 	</class>
+ </hibernate-mapping>

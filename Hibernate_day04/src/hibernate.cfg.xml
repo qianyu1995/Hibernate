@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+	<!-- property 元素用于配置Hibernate中的属性 键:值 -->
+	<!-- hibernate.connection.driver_class : 连接数据库的驱动 -->
+	<property name="hibernate.connection.driver_class">
+		com.mysql.jdbc.Driver
+	</property>
+	<!-- hibernate.connection.username : 连接数据库的用户名 -->
+	<property name="hibernate.connection.username">root</property>
+	<!-- hibernate.connection.password : 连接数据库的密码 -->
+	<property name="hibernate.connection.password">1234</property>
+	<!-- hibernate.connection.url : 连接数据库的地址,路径 -->
+	<property name="hibernate.connection.url">
+		jdbc:mysql://localhost:3306/EE19Day04
+	</property>
+
+	<property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	<property name="hbm2ddl.auto">update</property>
+	<property name="hibernate.dialect">
+		org.hibernate.dialect.MySQLDialect
+	</property>
+	<property name="hibernate.connection.provider_class">
+		org.hibernate.connection.C3P0ConnectionProvider
+	</property>
+	<property name="hibernate.c3p0.max_size">5</property>
+	<property name="hibernate.c3p0.min_size">2</property>
+
+	<property name="hibernate.current_session_context_class">
+		thread
+	</property>
+	<property name="hibernate.connection.isolation">4</property>
+	
+	<!-- 配置使用二级缓存 -->
+	<property name="hibernate.cache.use_second_level_cache">true</property>
+	
+	<!--
+		配置二级缓存的实现类 : EHCache
+	   -->
+	 <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+	
+	<!-- 开启查询缓存
+		hibernate.cache.use_query_cache true
+	 -->
+	<property name="hibernate.cache.use_query_cache">true</property>
+	
+	<mapping resource="com/itheima/domain/Customer.hbm.xml" />
+	<mapping resource="com/itheima/domain/Order.hbm.xml" />
+	<mapping resource="com/itheima/domain/Address.hbm.xml" />
+	<mapping resource="com/itheima/domain/Company.hbm.xml" />
+<!-- 配置类缓存区中,缓存哪个类
+
+ -->
+	<class-cache usage="read-only" class="com.itheima.domain.Customer"/>
+	<class-cache usage="read-only" class="com.itheima.domain.Order"/>
+<!-- 配置类缓存区中,缓存哪个集合
+	collection: 完整类名.集合属性名
+ -->	
+	<collection-cache usage="read-only" collection="com.itheima.domain.Customer.orders"/>
+</session-factory>
+</hibernate-configuration>
